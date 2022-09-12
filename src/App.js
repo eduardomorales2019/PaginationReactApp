@@ -17,6 +17,10 @@ function App() {
   const [page, setPages] = useState(0);
   const [followers, setFollowers] = useState([]);
 
+  const handlePage = (index) => {
+    setPages(index);
+  };
+
   useEffect(() => {
     if (loading) return;
     setFollowers(data[page]);
@@ -36,6 +40,20 @@ function App() {
               return <Follower key={follower.id} {...follower} />;
             })}
           </div>
+          {/* 1.- for low speed do ot rendder the button first  */}
+          {/* 2.- Inside the div, we render the data but the main option to render is the index, taht depends abput numbers of pages.  */}
+          {!loading && (
+            <div className="btn-container">
+              {data.map((item, index) => {
+                return (
+                  <button onClick={handlePage} className="page-btn" key={index}>
+                    {/* +1 for not show the index 0.  */}
+                    {index + 1}
+                  </button>
+                );
+              })}{" "}
+            </div>
+          )}
         </section>
       </main>
     </ErrorBondary>
