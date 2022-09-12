@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-
+import paginate from "../utils/paginate";
 // import paginate from "utils".--- we will see. its the paginate functions
 
 //
@@ -15,9 +15,10 @@ export const useFetch = () => {
 
   const Fetch = async () => {
     const { data } = await axios(url);
-    // const data = await response.json();
 
-    setData(data);
+    // instead pass all data, we pass the paginate data.
+    //setData(data);
+    setData(paginate(data));
     setLoading(false);
   };
 
