@@ -21,6 +21,35 @@ function App() {
     setPages(index);
   };
 
+  // next and prev function
+
+  const nextPage = () => {
+    setPages((oldpage) => {
+      let newPage = oldpage + 1;
+      //( conditional )
+
+      if (newPage > data.length - 1) {
+        newPage = 0;
+      }
+
+      return newPage;
+    });
+  };
+  const prevPage = () => {
+    setPages((oldpage) => {
+      let prevPage = oldpage - 1;
+      //( conditional )
+
+      if (prevPage < 0) {
+        prevPage = data.length - 1;
+      }
+
+      return prevPage;
+    });
+  };
+
+  // =================
+
   useEffect(() => {
     if (loading) return;
     setFollowers(data[page]);
@@ -44,14 +73,27 @@ function App() {
           {/* 2.- Inside the div, we render the data but the main option to render is the index, taht depends abput numbers of pages.  */}
           {!loading && (
             <div className="btn-container">
+              <button className="prev-btn" onClick={() => prevPage()}>
+                Prev
+              </button>
+              {/* ====== */}
               {data.map((item, index) => {
                 return (
-                  <button onClick={handlePage} className="page-btn" key={index}>
+                  <button
+                    onClick={() => handlePage(index)}
+                    className={`page-btn ${
+                      index === page ? "active-btn" : null
+                    }`}
+                    key={index}
+                  >
                     {/* +1 for not show the index 0.  */}
                     {index + 1}
                   </button>
                 );
-              })}{" "}
+              })}
+              <button className="next-btn" onClick={() => nextPage()}>
+                next
+              </button>
             </div>
           )}
         </section>
